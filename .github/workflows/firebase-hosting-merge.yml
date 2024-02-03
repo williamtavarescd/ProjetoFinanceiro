@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-      - name: Usando node
+
+      - name: Node
         uses: actions/setup-node@master
         with:
           node-version: 20.
@@ -21,11 +22,13 @@ jobs:
       - name: Install dependencies
         run: npm install --force
 
-      - name: build
+      - name: Build Frontend
         run: npm run build
         env:
           VITE_NAME_APP: ${{ vars.VITE_NAME_APP }}
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+
+      - name: Deploy firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FINANCEIRO_38D17 }}'
