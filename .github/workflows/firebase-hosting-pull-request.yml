@@ -7,6 +7,7 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
@@ -20,6 +21,8 @@ jobs:
 
       - name: build
         run: npm run build
+        env:
+          VITE_NAME_APP: ${{ vars.VITE_NAME_APP }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
